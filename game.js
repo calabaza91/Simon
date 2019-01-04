@@ -15,8 +15,7 @@ function nextSquence(){
     //Select randomChosenColor div and make it blink and beep
     $("#" + randomChosenColor).fadeIn(100).fadeOut(100).fadeIn(100);
 
-    let audio = new Audio('sounds/' + randomChosenColor + '.mp3');
-    audio.play();
+    playSound(randomChosenColor);
 
 };
 
@@ -26,8 +25,16 @@ $('.btn').click(function(){
   let userChosenColor = $(this).prop('id');
   //Add selected buttons to userClickedPattern array
   userClickedPattern.push(userChosenColor);
+  //Make the button beep
+  playSound(userChosenColor);
   console.log(userClickedPattern);
 });
 
+//Plas corresponding button sound
+function playSound(name){
+  let audio = new Audio('sounds/' + name + '.mp3');
+  audio.play();
+};
 
+//Call next sequence function
 nextSquence();
