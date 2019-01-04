@@ -1,5 +1,6 @@
 const buttonColors = ["red", "blue", "green", "yellow"];
 const gamePattern = [];
+const userClickedPattern = [];
 
 //Create a sequence of selected buttons
 function nextSquence(){
@@ -18,6 +19,15 @@ function nextSquence(){
     audio.play();
 
 };
+
+//Click on btn to choose color
+$('.btn').click(function(){
+  //Store id of selected button
+  let userChosenColor = $(this).prop('id');
+  //Add selected buttons to userClickedPattern array
+  userClickedPattern.push(userChosenColor);
+  console.log(userClickedPattern);
+});
 
 
 nextSquence();
