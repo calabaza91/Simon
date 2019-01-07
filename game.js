@@ -1,13 +1,21 @@
 const buttonColors = ["red", "blue", "green", "yellow"];
 const gamePattern = [];
 const userClickedPattern = [];
+let level = 0;
+let started = false;
 
-
-
+//If a key is pressed, start the game
+$(document).keypress(function() {
+  if (!started) {
+    $('#level-title').text("Level " + level);
+    nextSquence();
+    started = true;
+  }
+});
 
 
 //User selection function
-$('.btn').click(function(){
+$('.btn').click(function() {
   //Store id of selected button
   let userChosenColor = $(this).prop('id');
   //Add selected buttons to userClickedPattern array
@@ -21,41 +29,44 @@ $('.btn').click(function(){
 });
 
 
-
 //Game selection function
-function nextSquence(){
-    //Create random number 0-3
-    let randomNum = Math.floor(Math.random()*4);
-    //Randomly choose a color from the button colors array
-    let randomChosenColor = buttonColors[randomNum];
-    console.log(randomChosenColor);
-    //Add random color to game pattern array
-    gamePattern.push(randomChosenColor);
+function nextSquence() {
+  //Increase level by 1
+  level++;
+  //Change h1 to display level
+  $('#level-title').text("Level " + level);
 
-    //Select randomChosenColor div and make it blink and beep
-    $("#" + randomChosenColor).fadeIn(100).fadeOut(100).fadeIn(100);
-    //Make button beep
-    playSound(randomChosenColor);
+  //Create random number 0-3
+  let randomNum = Math.floor(Math.random() * 4);
+  //Randomly choose a color from the button colors array
+  let randomChosenColor = buttonColors[randomNum];
+  console.log(randomChosenColor);
+  //Add random color to game pattern array
+  gamePattern.push(randomChosenColor);
+
+  //Select randomChosenColor div and make it blink and beep
+  $("#" + randomChosenColor).fadeIn(100).fadeOut(100).fadeIn(100);
+  //Make button beep
+  playSound(randomChosenColor);
 
 };
 
 
 //Button Sound function
-function playSound(name){
+function playSound(name) {
   let audio = new Audio('sounds/' + name + '.mp3');
   audio.play();
 };
 
 
-
 //Button Animation function
-function animatePress(currentColor){
+function animatePress(currentColor) {
   $('#' + currentColor).addClass('pressed');
 
-  setTimeout(function(){
+  setTimeout(function() {
     $('#' + currentColor).removeClass('pressed');
   }, 100);
 };
 
 //Call next sequence function
-nextSquence();
+// nextSquence();
