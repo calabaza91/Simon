@@ -1,6 +1,6 @@
 const buttonColors = ["red", "blue", "green", "yellow"];
 const gamePattern = [];
-const userClickedPattern = [];
+let userClickedPattern = [];
 let level = 0;
 let started = false;
 
@@ -17,7 +17,7 @@ $(document).keypress(function() {
 //User selection function
 $('.btn').click(function() {
   //Store id of selected button
-  let userChosenColor = $(this).prop('id');
+  let userChosenColor = $(this).attr('id');
   //Add selected buttons to userClickedPattern array
   userClickedPattern.push(userChosenColor);
 
@@ -25,12 +25,32 @@ $('.btn').click(function() {
   playSound(userChosenColor);
   animatePress(userChosenColor);
 
-  console.log(userClickedPattern);
+  //Check user Answer
+  checkAnswer(userClickedPattern.length-1);
 });
+
+//Check Answer function
+function checkAnswer(currentLevel){
+  //Check if moast recent answer is correct
+  if(gamePattern[currentLevel] === userClickedPattern[currentLevel]){
+    console.log("success");
+    //Check if sequence is correct
+    if(userClickedPattern.length === gamePattern.length)
+      setTimeout(function(){
+        nextSquence();
+      },1000);
+  }else{
+    console.log("wrong")
+  }
+
+}
 
 
 //Game selection function
 function nextSquence() {
+  //Reset userClickedPattern array
+  userClickedPattern = [];
+
   //Increase level by 1
   level++;
   //Change h1 to display level
@@ -67,6 +87,3 @@ function animatePress(currentColor) {
     $('#' + currentColor).removeClass('pressed');
   }, 100);
 };
-
-//Call next sequence function
-// nextSquence();
