@@ -1,5 +1,5 @@
 const buttonColors = ["red", "blue", "green", "yellow"];
-const gamePattern = [];
+let gamePattern = [];
 let userClickedPattern = [];
 let level = 0;
 let started = false;
@@ -33,14 +33,22 @@ $('.btn').click(function() {
 function checkAnswer(currentLevel){
   //Check if moast recent answer is correct
   if(gamePattern[currentLevel] === userClickedPattern[currentLevel]){
-    console.log("success");
     //Check if sequence is correct
     if(userClickedPattern.length === gamePattern.length)
       setTimeout(function(){
         nextSquence();
       },1000);
   }else{
-    console.log("wrong")
+    //If answer is wrong, Game Over
+    playSound('wrong');
+    $("body").addClass("game-over");
+    setTimeout(function(){
+        $("body").removeClass("game-over");
+    },200);
+
+    //Reset game
+    $('h1').text("Game Over! Press Any Key to Restart");
+    startOver();
   }
 
 }
@@ -70,6 +78,14 @@ function nextSquence() {
   playSound(randomChosenColor);
 
 };
+
+//Reset game function
+function startOver(){
+  level = 0;
+  gamePattern = [];
+  started = false;
+}
+
 
 
 //Button Sound function
